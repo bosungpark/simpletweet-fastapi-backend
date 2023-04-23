@@ -29,10 +29,10 @@ def subscribe_timeline_using_rdbm(user_id):
             WHERE follows.follower_id = :user_id
             """).bindparams(bindparam('user_id', expanding=True)),
             params={'user_id': user_id}
-        )
+        ).all()
     return tweets
 
 
 def subscribe_timeline_using_redis(user_id):
-    tweets = redis_repository
+    tweets = redis_repository.list(user_id=user_id)
     return tweets

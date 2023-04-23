@@ -21,7 +21,7 @@ class RedisRepository:
         self._tracked.clear()
 
     def list(self, user_id):
-        return self.redis.get(f"{user_id}")
+        return self.redis.get(f"{user_id}") or []
 
     def rollback(self):
         self._tracked.clear()

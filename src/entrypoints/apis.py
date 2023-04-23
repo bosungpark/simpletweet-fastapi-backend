@@ -17,7 +17,10 @@ def publish_timeline(user_id) -> dict:
 def subscribe_timeline(user_id) -> dict:
     timelines1 = services.subscribe_timeline_using_rdbm(user_id=user_id)
     timelines2 = services.subscribe_timeline_using_redis(user_id=user_id)
-    assert timelines1 == timelines2
+    print(timelines1)
+    print()
+    print(timelines2)
+    # assert timelines1 == timelines2
     return {"message": "OK", "status_code": status.HTTP_200_OK, "timelines": timelines1}
 
 

@@ -19,8 +19,8 @@ follows=Table(
     Column("followee_id",Integer),
 )
 
-user=Table(
-    "user",metadata,
+users = Table(
+    "users",metadata,
     Column("id", BigInteger().with_variant(Integer, "sqlite"), primary_key=True),
     Column("screen_name",String(250)),
 )
@@ -29,4 +29,4 @@ user=Table(
 def start_mappers():
     tweets_mapper = mapper_registry.map_imperatively(models.Tweet, tweets)
     follow_mapper = mapper_registry.map_imperatively(models.Follow, follows)
-    user_mapper = mapper_registry.map_imperatively(models.User,user)
+    user_mapper = mapper_registry.map_imperatively(models.User,users)

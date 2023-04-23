@@ -13,7 +13,7 @@ def redis_message_consumer():
         followee_ids = message.get("followee_ids", [])
         timeline_id = message.get("timeline_id", "")
         for followee_id in followee_ids:
-            redis_instance.lpush(f"{followee_id}", timeline_id)
+            redis_instance.sadd(f"{followee_id}", timeline_id)
 
 
 if __name__ == "__main__":

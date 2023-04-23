@@ -1,3 +1,5 @@
+import json
+
 import uvicorn
 from fastapi import FastAPI
 from starlette import status
@@ -21,7 +23,7 @@ def subscribe_timeline(user_id) -> dict:
     print()
     print(timelines2)
     # assert timelines1 == timelines2
-    return {"message": "OK", "status_code": status.HTTP_200_OK, "timelines": timelines1}
+    return {"message": "OK", "status_code": status.HTTP_200_OK}
 
 
 if __name__ == "__main__":

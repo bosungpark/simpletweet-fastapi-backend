@@ -17,11 +17,11 @@ class RedisRepository:
 
     def commit(self):
         for key, value in self._tracked.items():
-            self.redis.lpush(f"{key}", str(value))
+            self.redis.sadd(f"{key}", str(value))
         self._tracked.clear()
 
     def list(self, user_id):
-        return self.redis.get(f"{user_id}") or []
+        return self.redis.smembers(f"{user_id}") or []
 
     def rollback(self):
         self._tracked.clear()

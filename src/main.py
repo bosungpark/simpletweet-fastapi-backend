@@ -22,4 +22,4 @@ sqlalchemy_session = scoped_session(sessionmaker(bind=connection, expire_on_comm
 redis_instance: redis.Redis = redis.StrictRedis(host="127.0.0.1", port="6379", db=0, decode_responses=True) # type: ignore
 
 # dummy data
-create_dummy_relationship(sqlalchemy_session)
+create_dummy_relationship(sqlalchemy_session, redis_instance)

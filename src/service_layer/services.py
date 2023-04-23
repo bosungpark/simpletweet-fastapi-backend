@@ -1,8 +1,8 @@
 from sqlalchemy import text, bindparam
 
 from src.adapters.cache import redis_repository
-from src.adapters.repository import tweet_repository, user_repository, follow_repository
-from src.domain.models import Tweet, User, Follow
+from src.adapters.repository import tweet_repository, follow_repository
+from src.domain.models import Tweet
 
 
 def publish_timeline(user_id: int):
@@ -23,7 +23,7 @@ def publish_timeline(user_id: int):
 def subscribe_timeline_using_rdbm(user_id):
     tweets = tweet_repository._session.execute(  # noqa
             text("""  
-            SELECT tweets.*, users.* FROM tweets
+            SELECT tweets.* FROM tweets
             JOIN users ON tweets.sender_id = users.id
             JOIN follows ON follows.followee_id = users.id
             WHERE follows.follower_id = :user_id

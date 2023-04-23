@@ -1,32 +1,33 @@
-from sqlalchemy import MetaData, Table, Column, Integer, String
-from sqlalchemy.orm import mapper
+from sqlalchemy import MetaData, Table, Column, Integer, String, BigInteger
+from sqlalchemy.orm import registry
 
 from src.domain import models
 
 metadata=MetaData()
+mapper_registry = registry(metadata=metadata)
 
 tweets =Table(
     "tweets",metadata,
-    Column("id",Integer, primary_key=True, autoincrement=True),
+    Column("id", BigInteger().with_variant(Integer, "sqlite"), primary_key=True),
     Column("sender_id",Integer),
 )
 
 user=Table(
     "user",metadata,
-    Column("id",Integer, primary_key=True, autoincrement=True),
+    Column("id", BigInteger().with_variant(Integer, "sqlite"), primary_key=True),
     Column("screen_name",String(250)),  # whatever
     Column("follow_id",Integer),  # follow table id
 )
 
 follows=Table(
     "follows",metadata,
-    Column("id",Integer, primary_key=True, autoincrement=True),
-    Column("follower_id",Integer, primary_key=True, autoincrement=True),
+    Column("id", BigInteger().with_variant(Integer, "sqlite"), primary_key=True),
+    Column("follower_id",Integer),
     Column("followee_id",Integer),
 )
 
 
 def start_mappers():
-    tweets_mapper = mapper(models.Tweet, tweets)
-    follow_mapper = mapper(models.Follow, follows)
-    user_mapper = mapper(models.User,user)
+    tweets_mapper = mapper_registry.map_imperatively(models.Tweet, tweets)
+    follow_mapper = mapper_registry.map_imperatively(models.Follow, follows)
+    user_mapper = mapper_registry.map_imperatively(models.User,user)

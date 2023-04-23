@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from src.adapters.orm import sqlalchemy_session
 from src.domain.models import Tweet
+from src.main import sqlalchemy_session
 
 
 class SqlAlchemyRepository:

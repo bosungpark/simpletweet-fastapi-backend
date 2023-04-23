@@ -1,4 +1,4 @@
-import uvicorn as uvicorn
+import uvicorn
 from fastapi import FastAPI
 from starlette import status
 
@@ -20,4 +20,4 @@ def subscribe_timeline(user_id) -> dict:
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="localhost", port=8000)

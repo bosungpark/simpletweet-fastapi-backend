@@ -1,21 +1,23 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 
 @dataclass
 class Tweet:
-    id:int
     sender_id: int
+    id: int | None = None
 
 
 @dataclass
 class User:
-    id:int
     screen_name: str
     follower_id: int
+    id: int | None = None
 
 
 @dataclass
 class Follow:
-    id: int
     follower_id: int
     followee_id: int
+    id: int | None = None

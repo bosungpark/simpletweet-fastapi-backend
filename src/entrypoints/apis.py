@@ -15,8 +15,10 @@ def publish_timeline(user_id) -> dict:
 
 @app.get("/timeline", status_code=status.HTTP_201_CREATED)
 def subscribe_timeline(user_id) -> dict:
-    timelines = services.subscribe_timeline(user_id=user_id)
-    return {"message": "OK", "status_code": status.HTTP_200_OK, "timelines": timelines}
+    timelines1 = services.subscribe_timeline_using_rdbm(user_id=user_id)
+    timelines2 = services.subscribe_timeline_using_redis(user_id=user_id)
+    assert timelines1 == timelines2
+    return {"message": "OK", "status_code": status.HTTP_200_OK, "timelines": timelines1}
 
 
 if __name__ == "__main__":

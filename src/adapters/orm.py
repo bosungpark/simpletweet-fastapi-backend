@@ -12,18 +12,17 @@ tweets =Table(
     Column("sender_id",Integer),
 )
 
+follows=Table(
+    "follows",metadata,
+    Column("id", BigInteger().with_variant(Integer, "sqlite"), primary_key=True),
+    Column("follower_id",Integer, index=True),
+    Column("followee_id",Integer),
+)
+
 user=Table(
     "user",metadata,
     Column("id", BigInteger().with_variant(Integer, "sqlite"), primary_key=True),
     Column("screen_name",String(250)),  # whatever
-    Column("follow_id",Integer),  # follow table id
-)
-
-follows=Table(
-    "follows",metadata,
-    Column("id", BigInteger().with_variant(Integer, "sqlite"), primary_key=True),
-    Column("follower_id",Integer),
-    Column("followee_id",Integer),
 )
 
 

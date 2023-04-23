@@ -17,7 +17,7 @@ class RedisRepository:
 
     def commit(self):
         for key, value in self._tracked.items():
-            self.redis.lpush(f"{key}", value)
+            self.redis.lpush(f"{key}", str(value))
         self._tracked.clear()
 
     def list(self, user_id):
@@ -27,7 +27,7 @@ class RedisRepository:
         self._tracked.clear()
 
     def publish(self, message: dict, channel="publish_message"):
-        logging.info(f"Publishing: channel={channel}, message={message}!")
+        logging.error(f"Publishing: channel={channel}, message={message}!")
         self.redis.publish(channel, json.dumps(message))
 
 

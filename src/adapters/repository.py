@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from src.adapters.orm import session
+from src.adapters.orm import sqlalchemy_session
 from src.domain.models import Tweet
 
 
@@ -23,4 +23,4 @@ class SqlAlchemyRepository:
         self._session.rollback()
 
 
-tweet_repository: SqlAlchemyRepository = SqlAlchemyRepository(session=session, model=Tweet)
+tweet_repository: SqlAlchemyRepository = SqlAlchemyRepository(session=sqlalchemy_session, model=Tweet)

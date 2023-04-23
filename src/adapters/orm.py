@@ -36,4 +36,4 @@ engine = create_engine("sqlite+pysqlite:///:memory:", connect_args={"check_same_
 metadata.create_all(engine)
 conn = engine.connect()
 start_mappers()
-session = scoped_session(sessionmaker(bind=engine, expire_on_commit=False))
+sqlalchemy_session = scoped_session(sessionmaker(bind=engine, expire_on_commit=False))

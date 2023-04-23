@@ -1,22 +1,30 @@
-from collections import defaultdict, deque
+import redis
+
+redis_instance: redis.Redis = redis.StrictRedis(host="127.0.0.1", port="6379", db=0, decode_responses=True)
 
 
-class InMemoryCache(object):
-    _followers = defaultdict(list)  # 팔로워 테이블, {user_id: [follower_id]}
-    _timelines = defaultdict(deque)  # 타임라인 테이블, {follower_id: deque(timeline)}
+class RedisRepository:
+    _tracked = dict()
 
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, "_instance"):
-            cls._instance = super(InMemoryCache, cls).__new__(cls)
-        return cls._instance  # type: ignore
+    def __init__(self):
+        self.redis = redis_instance
 
-    def publish_timeline(self, user_id, timeline):
-        followers = self._followers[user_id]
-        for follower_id in followers:
-            self._timelines[follower_id].appendleft(timeline)
+    def add(self, key, value):
+        self._tracked[key] = value
 
-    def subscribe_timeline(self, user_id):
-        return self._timelines[user_id]
+    def commit(self):
+        for key, value in self._tracked.items():
+            self.redis.set(key, value)
+        self._tracked.clear()
 
+    def get(self, key):
+        return self.redis.get(str(key))
 
-in_memory_cache = InMemoryCache()
+    def rollback(self):
+        self._tracked.clear()
+
+    def set_timeline_id(self, user_id, timeline_id):
+        self.redis.lpush(f"{user_id}", timeline_id)
+
+    def get_timeline_ids(self, user_id):
+        return self.redis.get(f"{user_id}")

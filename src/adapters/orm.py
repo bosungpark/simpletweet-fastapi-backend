@@ -22,7 +22,7 @@ follows=Table(
 user=Table(
     "user",metadata,
     Column("id", BigInteger().with_variant(Integer, "sqlite"), primary_key=True),
-    Column("screen_name",String(250)),  # whatever
+    Column("screen_name",String(250)),
 )
 
 

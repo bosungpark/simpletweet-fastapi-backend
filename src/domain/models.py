@@ -11,13 +11,12 @@ class Tweet:
 
 @dataclass
 class User:
-    screen_name: str
-    follow: Follow
     id: int | None = None
+    screen_name: str | None = None
 
 
 @dataclass
 class Follow:
-    follower_id: int
-    followee_id: int
     id: int | None = None
+    follower_id: int | None = None
+    followee_id: int | None = None

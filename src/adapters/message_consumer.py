@@ -10,10 +10,10 @@ def redis_message_consumer():
     pubsub.subscribe("publish_message")
     for message in pubsub.listen():
         logging.error(f"Subscribing: message={message}!")
-        follower_ids = message.get("follower_ids", [])
+        followee_ids = message.get("followee_ids", [])
         timeline_id = message.get("timeline_id", "")
-        for follower_id in follower_ids:
-            redis_instance.lpush(f"{follower_id}", timeline_id)
+        for followee_id in followee_ids:
+            redis_instance.lpush(f"{followee_id}", timeline_id)
 
 
 if __name__ == "__main__":

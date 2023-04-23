@@ -1,12 +1,15 @@
-import redis
+import json
+import logging
 
-redis_instance: redis.Redis = redis.StrictRedis(host="127.0.0.1", port="6379", db=0, decode_responses=True)
+from src.main import redis_instance
+
+logger = logging.getLogger(__name__)
 
 
 class RedisRepository:
     _tracked = dict()
 
-    def __init__(self):
+    def __init__(self, redis_instance):
         self.redis = redis_instance
 
     def add(self, key, value):
@@ -23,5 +26,9 @@ class RedisRepository:
     def rollback(self):
         self._tracked.clear()
 
+    def publish(self, message: dict, channel="publish_message"):
+        logging.info(f"Publishing: channel={channel}, message={message}!")
+        self.redis.publish(channel, json.dumps(message))
 
 
+redis_repository = RedisRepository(redis_instance=redis_instance)

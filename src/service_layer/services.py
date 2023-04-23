@@ -18,6 +18,6 @@ def subscribe_timeline(user_id):
             JOIN follows ON follows.followee_id = users.id
             WHERE follows.follower_id = :user_id
             """).bindparams(bindparam('user_id')),
-        params={'user_id':user_id}
+            params={'user_id':user_id}
         )
     return tweets

@@ -1,5 +1,5 @@
-from sqlalchemy import MetaData, Table, Column, Integer, String, create_engine
-from sqlalchemy.orm import mapper, scoped_session, sessionmaker
+from sqlalchemy import MetaData, Table, Column, Integer, String
+from sqlalchemy.orm import mapper
 
 from src.domain import models
 
@@ -27,13 +27,6 @@ follows=Table(
 
 
 def start_mappers():
-    tweets_mapper= mapper(models.Tweet, tweets)
+    tweets_mapper = mapper(models.Tweet, tweets)
     follow_mapper = mapper(models.Follow, follows)
-    user_mapper= mapper(models.User,user)
-
-
-engine = create_engine("sqlite+pysqlite:///:memory:", connect_args={"check_same_thread": False}, future=True)
-metadata.create_all(engine)
-conn = engine.connect()
-start_mappers()
-sqlalchemy_session = scoped_session(sessionmaker(bind=engine, expire_on_commit=False))
+    user_mapper = mapper(models.User,user)

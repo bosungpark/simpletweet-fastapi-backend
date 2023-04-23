@@ -14,17 +14,14 @@ class RedisRepository:
 
     def commit(self):
         for key, value in self._tracked.items():
-            self.redis.set(key, value)
+            self.redis.lpush(f"{key}", value)
         self._tracked.clear()
 
-    def get(self, key):
-        return self.redis.get(str(key))
+    def list(self, user_id):
+        return self.redis.get(f"{user_id}")
 
     def rollback(self):
         self._tracked.clear()
 
-    def set_timeline_id(self, user_id, timeline_id):
-        self.redis.lpush(f"{user_id}", timeline_id)
 
-    def get_timeline_ids(self, user_id):
-        return self.redis.get(f"{user_id}")
+

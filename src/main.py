@@ -4,10 +4,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from src.adapters.orm import metadata, start_mappers
-
-# fastapi
 from src.dummy import create_dummy_relationship
 
+# fastapi
 ...
 
 # sqlite
